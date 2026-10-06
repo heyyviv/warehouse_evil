@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Analyst</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#000;font-family:Georgia,'Times New Roman',serif;color:#ddd;user-select:none}
+  canvas{display:block}
+  #vignette{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 45%,rgba(0,0,0,.75) 100%)}
+  #hurt{position:fixed;inset:0;pointer-events:none;opacity:0;box-shadow:inset 0 0 160px 60px rgba(180,0,0,.85)}
+  #cross{position:fixed;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:rgba(255,255,255,.75);pointer-events:none}
+  #hit{position:fixed;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;pointer-events:none;opacity:0}
+  #hit:before,#hit:after{content:"";position:absolute;left:12px;top:-4px;width:2px;height:34px;background:#f33}
+  #hit:before{transform:rotate(45deg)}#hit:after{transform:rotate(-45deg)}
+  .hud{position:fixed;pointer-events:none;text-shadow:0 0 6px #000,0 2px 2px #000}
+  #hp{left:24px;bottom:24px;width:260px}
+  #hp .lbl{font-size:13px;letter-spacing:3px;color:#9a9;margin-bottom:4px}
+  #hp .bar{height:14px;border:1px solid #777;background:rgba(0,0,0,.6)}
+  #hp .fill{height:100%;width:100%;background:#2fa84f;transition:width .15s,background .3s}
+  #ammo{right:28px;bottom:22px;text-align:right}
+  #ammo .w{font-size:14px;letter-spacing:4px;color:#aaa}
+  #ammo .n{font-size:44px;font-family:'Courier New',monospace;color:#f0e6c8}
+  #obj{top:20px;left:50%;transform:translateX(-50%);font-size:18px;letter-spacing:4px;color:#e8d9a8}
+  #hint{top:50px;left:50%;transform:translateX(-50%);font-size:15px;letter-spacing:3px;color:#7fd0ff;white-space:nowrap}
+  #msg{top:18%;left:50%;transform:translateX(-50%);font-size:22px;color:#fff;text-align:center;opacity:0;transition:opacity .4s;max-width:80vw}
+  #overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer}
+  #overlay h1{font-size:76px;letter-spacing:14px;margin:0;color:#b00d0d;text-shadow:0 0 30px #600}
+  #overlay .sub{letter-spacing:6px;color:#999;margin:6px 0 28px}
+  #overlay .ctl{display:inline-block;text-align:left;line-height:1.9;color:#ccc;font-size:17px;margin-bottom:26px}
+  #overlay .ctl b{display:inline-block;min-width:130px;color:#e8d9a8;font-family:'Courier New',monospace}
+  #overlay .btn{font-size:22px;letter-spacing:6px;color:#fff;animation:pulse 1.4s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+</style>
+</head>
+<body>
+<div id="vignette"></div>
+<div id="hurt"></div>
+<div id="cross"></div>
+<div id="hit"></div>
+<div class="hud" id="hp"><div class="lbl">ANALYST &nbsp;&middot;&nbsp; HEALTH</div><div class="bar"><div class="fill" id="hpfill"></div></div></div>
+<div class="hud" id="ammo"><div class="w" id="wname">SHOTGUN</div><div class="n" id="wammo">6 / 10</div></div>
+<div class="hud" id="obj">MONSTERS 0 / 6</div>
+<div class="hud" id="hint"></div>
+<div class="hud" id="msg"></div>
+<div id="overlay"><div>
+  <h1 id="ovtitle">THE ANALYST</h1>
+  <div class="sub" id="ovsub">TO SURVIVE YOU NEED THE <span style="color:#8cf">SEMANTIC BOT</span></div>
+  <div class="ctl" id="ovctl">
+    <b>W A S D</b> move<br><b>SHIFT</b> sprint<br><b>MOUSE</b> look<br>
+    <b>LEFT CLICK</b> shoot<br><b>R</b> reload shotgun<br><b>1 / 2</b> switch weapon<br><b>ESC</b> pause
+  </div><br>
+  <div class="btn" id="ovbtn">CLICK TO START</div>
+</div></div>
+
+<script src="three.min.js"></script>
+<script src="post.js"></script>
+<script>window.THREE||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
+<script src="game.js"></script>
+</body>
+</html>
